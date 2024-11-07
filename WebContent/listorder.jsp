@@ -1,24 +1,20 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="java.text.NumberFormat" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<title>YOUR NAME Grocery Order List</title>
-</head>
-<body>
+	<%@ page import="java.text.NumberFormat" %>
+		<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8" %>
+			<!DOCTYPE html>
+			<html>
 
-<h1>Order List</h1>
+			<head>
+				<title>Chop & Co Grocery Order List</title>
+			</head>
 
-<%
-//Note: Forces loading of SQL Server driver
-try
-{	// Load driver class
-	Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-}
-catch (java.lang.ClassNotFoundException e)
-{
-	out.println("ClassNotFoundException: " +e);
+			<body>
+
+				<h1>Order List</h1>
+
+				<% //Note: Forces loading of SQL Server driver try { // Load driver class
+					Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); } catch
+					(java.lang.ClassNotFoundException e) { out.println("ClassNotFoundException: " +e);
 }
 
 // Useful code for formatting currency values:
@@ -42,4 +38,3 @@ catch (java.lang.ClassNotFoundException e)
 
 </body>
 </html>
-
