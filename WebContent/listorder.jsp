@@ -12,29 +12,48 @@
 
 				<h1>Order List</h1>
 
-				<% //Note: Forces loading of SQL Server driver try { // Load driver class
-					Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); } catch
-					(java.lang.ClassNotFoundException e) { out.println("ClassNotFoundException: " +e);
-}
+				<%
 
-// Useful code for formatting currency values:
-// NumberFormat currFormat = NumberFormat.getCurrencyInstance();
-// out.println(currFormat.format(5.0);  // Prints $5.00
+					String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
+					String uid="sa" ; 
+					String pw="304#sa#pw";
+					
+					String sql = "SELECT orderId, orderDate, orderSummary.customerId, firstName, lastName, totalAmount FROM orderSummary JOIN customer ON orderSummary.customerId = customer.customerId";
 
-// Make connection
 
-// Write query to retrieve all order summary records
+		
+					try ( Connection con = DriverManager.getConnection(url, uid, pw);
+	          		Statement stmt = con.createStatement();) 
+	    			{			
 
-// For each order in the ResultSet
+						
+						ResultSet rst = stmt.executeQuery(sql);
 
-	// Print out the order summary information
-	// Write a query to retrieve the products in the order
-	//   - Use a PreparedStatement as will repeat this query many times
-	// For each product in the order
-		// Write out product information 
+						out.print("<table border=\"1\">");
+						out.print("<tr><th>OrderId</th><th>Order Date</th><th>Customer Id</th><th>Customer Name</th><th>Total Amount</th></tr>");
 
-// Close connection
-%>
+						while (rst.next())
+						{		
+								
+							out.println("<tr><td>"+rst.getInt("orderId")+"</td><td>"+rst.getDate("orderDate")+" "+rst.getTime("orderDate")+"</td><td>"+rst.getInt("customerId")+"</td><td>"+rst.getString("firstName")+" "+rst.getString("lastName")+"</td><td>"+rst.getDouble("totalAmount")+"</td></tr>");
+							
+						}
 
-</body>
-</html>
+						out.println("</table></body></html>");
+					}
+					catch (SQLException ex)
+					{
+						System.err.println("SQLException: " + ex);
+					}
+					
+					
+					
+
+				%>
+					
+					
+			
+
+			</body>
+
+			</html>
