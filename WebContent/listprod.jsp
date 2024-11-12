@@ -30,35 +30,82 @@ catch (java.lang.ClassNotFoundException e)
 {
 	out.println("ClassNotFoundException: " +e);
 }
-
+	//instantiate number format object to format currency values
 	NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 
-
+	//define connection information to orders DB
 	String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
 	String uid="sa" ; 
 	String pw="304#sa#pw";
 
+	//define queries for viewing all items, or particular item a user searches for
 	String sql = "SELECT * FROM product";
+	String sql2 = "SELECT * FROM product WHERE productName LIKE ?";
 
 
+	//attempt connection to DB
 	try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	Statement stmt = con.createStatement();) 
   	{	
 
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		ResultSet rst = pstmt.executeQuery();
-
+		//display table headers 
 		out.print("<table></th><th></th><th align=\"left\">Product Name</th><th align=\"left\">Price</th></tr>");
+
+		//define hyperlink text
 		String link;
-		String message = "Add to Cart";
+		String hyper_text = "Add to Cart";
 
 
+		//if no prompt is entered into product search bar, all products are listed
+		if(name == null)
+		{
+			//create prepared statement
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rst = pstmt.executeQuery();
+
+			//iterate through products in result set and add to table
 			while(rst.next())
 			{
-				link = "<a href =\"addcart.jsp?id=" + rst.getInt("productId") + "&name=" + rst.getString("productName") + "&price=" + rst.getDouble("productPrice") +"\">" + message + "</a>";
+				//define hyperlink with apropriate data for particular product
+				link = "<a href =\"addcart.jsp?id=" + rst.getInt("productId") + "&name=" + rst.getString("productName") + "&price=" + rst.getDouble("productPrice") +"\">" + hyper_text + "</a>";
+
+				//add data and hyperlink to table
 				out.println("<tr><td>"+link+"</td><td>"+rst.getString("productName")+"</td><td>"+currFormat.format(rst.getDouble("productPrice"))+"</td></tr>");
 		
 			}
+
+		}
+
+		//when a prompt is entered into the search bar, the search is filtered accordingly
+		else
+		{
+
+			//create prepared statement
+			PreparedStatement pstmt1 = con.prepareStatement(sql2);
+			
+			//define search string. Empty charactes are removed from the end and beginning of the search string
+			String find = name.strip();
+
+			//Query is created to find any items that have matching beginning characters to the entered string
+			pstmt1.setString(1,find+"%");
+			
+
+			ResultSet rst1 = pstmt1.executeQuery();
+			
+
+			//iterate through the products in the result set and add to table
+			while(rst1.next())
+			{
+				//define hyperlink with apropriate data for particular product
+				link = "<a href =\"addcart.jsp?id=" + rst1.getInt("productId") + "&name=" + rst1.getString("productName") + "&price=" + rst1.getDouble("productPrice") +"\">" + hyper_text + "</a>";
+
+				//add data and hyperlink to table
+				out.println("<tr><td>"+link+"</td><td>"+rst1.getString("productName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
+
+			}
+
+
+		}
 			
 			
 	
@@ -68,6 +115,10 @@ catch (java.lang.ClassNotFoundException e)
 	{
 		System.err.println("SQLException: " + ex);
 	}
+
+
+	//close DB connection
+	out.close();
 
 
 
