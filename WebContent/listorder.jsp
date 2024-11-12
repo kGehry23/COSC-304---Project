@@ -74,6 +74,9 @@
 						System.err.println("SQLException: " + ex);
 					}
 
+
+					out.close();
+
 					
 					
 					
