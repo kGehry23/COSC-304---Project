@@ -58,7 +58,7 @@ catch (java.lang.ClassNotFoundException e)
 
 
 		//if no prompt is entered into product search bar, all products are listed
-		if(name == "")
+		if(name == null || name == "")
 		{
 
 			out.print("<h2>"+"All Products"+"</h2>");
