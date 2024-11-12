@@ -13,9 +13,7 @@
 				<h1>Order List</h1>
 
 				<%
-
-				
-					
+					NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 
 					String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
 					String uid="sa" ; 
@@ -44,7 +42,7 @@
 
 							ResultSet rst2 = pstmt.executeQuery();
 
-							out.println("<tr><td>"+rst.getInt("orderId")+"</td><td>"+rst.getDate("orderDate")+" "+rst.getTime("orderDate")+"</td><td>"+rst.getInt("customerId")+"</td><td>"+rst.getString("firstName")+" "+rst.getString("lastName")+"</td><td>"+"$"+String.format("%.2f", rst.getDouble("totalAmount"))+"</td></tr>");
+							out.println("<tr><td>"+rst.getInt("orderId")+"</td><td>"+rst.getDate("orderDate")+" "+rst.getTime("orderDate")+"</td><td>"+rst.getInt("customerId")+"</td><td>"+rst.getString("firstName")+" "+rst.getString("lastName")+"</td><td>"+currFormat.format(rst.getDouble("totalAmount"))+"</td></tr>");
 							out.print("<tr align=\"right\"><td colspan=\"4\">");
 
 							out.print("<table border=\"1\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>");
@@ -53,7 +51,7 @@
 							while(rst2.next())
 							{
 
-								out.print("<tr><td>"+rst2.getInt("productId")+"</td><td>"+rst2.getInt("quantity")+"</td><td>"+"$"+String.format("%.2f",rst2.getDouble("price"))+"</td></tr>");
+								out.print("<tr><td>"+rst2.getInt("productId")+"</td><td>"+rst2.getInt("quantity")+"</td><td>"+currFormat.format(rst2.getDouble("price"))+"</td></tr>");
 					
 							}
 
@@ -73,9 +71,6 @@
 					{
 						System.err.println("SQLException: " + ex);
 					}
-
-
-					out.close();
 
 					
 					
