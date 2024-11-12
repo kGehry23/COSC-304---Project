@@ -4,6 +4,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.time.Instant" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
@@ -12,22 +13,29 @@
 </head>
 <body>
 
+<h1>Your Order Summary</h1>
+
+
 <% 
 // Get customer id
 String custId = request.getParameter("customerId");
+
 @SuppressWarnings({"unchecked"})
 HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Object>>) session.getAttribute("productList");
 
-// Determine if valid customer id was entered
+//used to format prices correctly
+NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+
+
 // Determine if there are products in the shopping cart
 // If either are not true, display an error message
 
-// Make connection
-
+//Connect to DB
 String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
 String uid="sa" ; 
 String pw="304#sa#pw";
 
+//Query Declaration
 String sql = "SELECT * FROM customer WHERE customerId = ?";
 String sql2 = "SELECT orderId FROM ordersummary";
 String sql3 = "INSERT INTO ordersummary (orderDate, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -39,43 +47,43 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	Statement stmt = con.createStatement();) 
 {
 
+	//Perfom query for customerId to check if it is in the DB
 	PreparedStatement pstmt = con.prepareStatement(sql);
 	pstmt.setString(1,custId);
 
 	ResultSet rst = pstmt.executeQuery();
 
+	//If the customer ID is not in the DB, and error message is displayed.
 	if(!rst.next())
 	{
 		out.print("<h1><font color = \"#ff0000\">"+"The Entered Customer ID is Invalid. Please return to the Previous Page and Enter a Valid Customer ID."+"</font></h1>");
 	}
 
+	//if the cusomer ID is valid, an order summary is displayed as well as information about the customer and their order.
+
+	else if(productList.isEmpty())
+	{
+		out.print("<h2>"+"Your Cart is Empty!"+"</h2>");
+	}
+
+	//if the cusomer ID is valid, an order summary is displayed as well as information about the customer and their order.
 	else
 	{
 
-
+		out.print("<table><tr><th>Product Id</th><th>Product Name</th><th>Quantity</th>");
+		out.println("<th>Price</th><th>Subtotal</th></tr>");
 		
-		long now = System.currentTimeMillis();
-		Timestamp time = new Timestamp(now);
+		
+		Instant instant = Instant.now();
+		Timestamp time = Timestamp.from(instant);
 		out.print(time);
 
 		String address = rst.getString("address");
-		out.print("<br><br>"+address);
-
 		String city = rst.getString("city");
-		out.print("<br><br>"+city);
-
 		String state = rst.getString("state");
-		out.print("<br><br>"+state);
-
 		String postalcode = rst.getString("postalcode");
-		out.print("<br><br>"+postalcode);
-
 		String country = rst.getString("country");
-		out.print("<br><br>"+country);
-
 		int cid = rst.getInt("customerId");
-		out.print("<br><br>"+cid);
-
 	
 
 		// Use retrieval of auto-generated keys.
@@ -89,46 +97,71 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		pstmt1.setString(6,country);
 		pstmt1.setInt(7,cid);
 
+
 		int row = pstmt1.executeUpdate();
-		out.print(row);
 	
 		ResultSet keys = pstmt1.getGeneratedKeys();
 		keys.next();
 		int orderId = keys.getInt(1);
 
-		out.print("Test: " +orderId);
 
-
-		double total = 0;
-
-		Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
-
-			while (iterator.hasNext())
-			{ 
-				Map.Entry<String, ArrayList<Object>> entry = iterator.next();
+		double total =0;
+			Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
+			while (iterator.hasNext()) 
+			{	Map.Entry<String, ArrayList<Object>> entry = iterator.next();
 				ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
+				if (product.size() < 4)
+				{
+					out.println("Expected product with four entries. Got: "+product);
+					continue;
+				}
+				
+				out.print("<tr><td>"+product.get(0)+"</td>");
+				out.print("<td>"+product.get(1)+"</td>");
 
 				String productId = (String) product.get(0);
-				String price = (String) product.get(2);
-
-				int qty = ( (Integer)product.get(3)).intValue();
-				double pr = Double.parseDouble(price);
-
-				total = total + pr*qty;	
+		
+				out.print("<td align=\"center\">"+product.get(3)+"</td>");
+				Object price = product.get(2);
+				Object itemqty = product.get(3);
+				double pr = 0;
+				int qty = 0;
+				
+				try
+				{
+					pr = Double.parseDouble(price.toString());
+				}
+				catch (Exception e)
+				{
+					out.println("Invalid price for product: "+product.get(0)+" price: "+price);
+				}
+				try
+				{
+					qty = Integer.parseInt(itemqty.toString());
+				}
+				catch (Exception e)
+				{
+					out.println("Invalid quantity for product: "+product.get(0)+" quantity: "+qty);
+				}		
+		
+				out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
+				out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");
+				out.println("</tr>");
+				total = total +pr*qty;
 
 
 				PreparedStatement pstmt_prod = con.prepareStatement(sql5);
 				pstmt_prod.setInt(1,orderId);
-				pstmt_prod.setString(2,productId);
+				pstmt_prod.setString(2,(String)productId);
 				pstmt_prod.setInt(3,qty);
 				pstmt_prod.setDouble(4,pr);
 
 				int row3 = pstmt_prod.executeUpdate();
 
 			}
-
-
-			out.print("<br><br>"+total);
+			out.println("<tr><td colspan=\"4\" align=\"right\"><b>Order Total</b></td>"
+					+"<td align=\"right\">"+currFormat.format(total)+"</td></tr>");
+			out.println("</table>");
 
 
 		PreparedStatement pstmt2 = con.prepareStatement(sql4);
@@ -139,15 +172,13 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 
 
+		out.print("<br><h2>Order Completed. Your Order Will Be Shipped Soon.</h2>");
+		out.print("<h2>"+"Your Order Rererence Number Is:" +orderId+"</h2>");
+		out.print("<h2>"+"Shipping To Customer: "+rst.getInt("customerId")+"&emsp;Name: "+rst.getString("firstName")+" "+rst.getString("lastName")+"</h2>");
 
 
-
-
-		
-
-
-
-
+		// Clear cart if order placed successfully
+		productList.clear();
 		
 	}
 
@@ -161,26 +192,9 @@ catch (SQLException ex)
 }
 
 					
-// Save order information to database
 
 
-	
-	
 
-// Insert each item into OrderProduct table using OrderId from previous INSERT
-
-// Update total amount for order record
-
-// Here is the code to traverse through a HashMap
-// Each entry in the HashMap is an ArrayList with item 0-id, 1-name, 2-quantity, 3-price
-
-/*
-
-*/
-
-// Print out order summary
-
-// Clear cart if order placed successfully
 %>
 </BODY>
 </HTML>
