@@ -16,10 +16,11 @@
 </form>
 
 
-<h2>All Products</h2>
+
 
 <% // Get product name to search for
 String name = request.getParameter("productName");
+
 		
 //Note: Forces loading of SQL Server driver
 try
@@ -57,8 +58,11 @@ catch (java.lang.ClassNotFoundException e)
 
 
 		//if no prompt is entered into product search bar, all products are listed
-		if(name == null)
+		if(name == "")
 		{
+
+			out.print("<h2>"+"All Products"+"</h2>");
+			
 			//create prepared statement
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rst = pstmt.executeQuery();
@@ -80,6 +84,8 @@ catch (java.lang.ClassNotFoundException e)
 		else
 		{
 
+			out.print("<h2>"+"Results for Products Beginning With: "+name+"</h2>");
+
 			//create prepared statement
 			PreparedStatement pstmt1 = con.prepareStatement(sql2);
 			
@@ -91,6 +97,7 @@ catch (java.lang.ClassNotFoundException e)
 			
 
 			ResultSet rst1 = pstmt1.executeQuery();
+
 			
 
 			//iterate through the products in the result set and add to table
