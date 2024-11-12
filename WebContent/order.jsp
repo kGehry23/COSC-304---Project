@@ -28,8 +28,11 @@ String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustSer
 String uid="sa" ; 
 String pw="304#sa#pw";
 
-String sql = "SELECT customerId FROM customer WHERE customerId = ?";
-String sql2 = "INSERT INTO ordersummary VALUES ";
+String sql = "SELECT * FROM customer WHERE customerId = ?";
+String sql2 = "SELECT orderId FROM ordersummary";
+String sql3 = "INSERT INTO ordersummary (orderDate, shiptoAddress, shiptoCity, shiptoState, shiptoPostalCode, shiptoCountry, customerId) VALUES (?, ?, ?, ?, ?, ?, ?)";
+String sql4 = "UPDATE ordersummary SET totalAmount = ? WHERE orderId = ?";
+String sql5 = "INSERT INTO orderproduct (orderId, productId, quantity, price) VALUES (?, ?, ?, ?)";
 
 
 try ( Connection con = DriverManager.getConnection(url, uid, pw);
@@ -43,22 +46,104 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 	if(!rst.next())
 	{
-		out.print("<font color = \"#ff0000\">"+"The Entered Customer ID is Invalid. Please return to the Previous Page and Enter a Valid Customer ID."+"</font>");
+		out.print("<h1><font color = \"#ff0000\">"+"The Entered Customer ID is Invalid. Please return to the Previous Page and Enter a Valid Customer ID."+"</font></h1>");
 	}
 
 	else
 	{
 
 
+		
+		long now = System.currentTimeMillis();
+		Timestamp time = new Timestamp(now);
+		out.print(time);
+
+		String address = rst.getString("address");
+		out.print("<br><br>"+address);
+
+		String city = rst.getString("city");
+		out.print("<br><br>"+city);
+
+		String state = rst.getString("state");
+		out.print("<br><br>"+state);
+
+		String postalcode = rst.getString("postalcode");
+		out.print("<br><br>"+postalcode);
+
+		String country = rst.getString("country");
+		out.print("<br><br>"+country);
+
+		int cid = rst.getInt("customerId");
+		out.print("<br><br>"+cid);
+
+	
 
 		// Use retrieval of auto-generated keys.
-		PreparedStatement pstmt1 = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);		
+		PreparedStatement pstmt1 = con.prepareStatement(sql3, Statement.RETURN_GENERATED_KEYS);
 		
+		pstmt1.setObject(1,time);
+		pstmt1.setString(2,address);
+		pstmt1.setString(3,city);
+		pstmt1.setString(4,state);
+		pstmt1.setString(5,postalcode);
+		pstmt1.setString(6,country);
+		pstmt1.setInt(7,cid);
+
+		int row = pstmt1.executeUpdate();
+		out.print(row);
+	
 		ResultSet keys = pstmt1.getGeneratedKeys();
 		keys.next();
 		int orderId = keys.getInt(1);
 
 		out.print("Test: " +orderId);
+
+
+		double total = 0;
+
+		Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
+
+			while (iterator.hasNext())
+			{ 
+				Map.Entry<String, ArrayList<Object>> entry = iterator.next();
+				ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
+
+				String productId = (String) product.get(0);
+				String price = (String) product.get(2);
+
+				int qty = ( (Integer)product.get(3)).intValue();
+				double pr = Double.parseDouble(price);
+
+				total = total + pr*qty;	
+
+
+				PreparedStatement pstmt_prod = con.prepareStatement(sql5);
+				pstmt_prod.setInt(1,orderId);
+				pstmt_prod.setString(2,productId);
+				pstmt_prod.setInt(3,qty);
+				pstmt_prod.setDouble(4,pr);
+
+				int row3 = pstmt_prod.executeUpdate();
+
+			}
+
+
+			out.print("<br><br>"+total);
+
+
+		PreparedStatement pstmt2 = con.prepareStatement(sql4);
+		pstmt2.setDouble(1,total);
+		pstmt2.setInt(2,orderId);
+
+		int row2 = pstmt2.executeUpdate();
+
+
+
+
+
+
+
+		
 
 
 
@@ -90,17 +175,7 @@ catch (SQLException ex)
 // Each entry in the HashMap is an ArrayList with item 0-id, 1-name, 2-quantity, 3-price
 
 /*
-	Iterator<Map.Entry<String, ArrayList<Object>>> iterator = productList.entrySet().iterator();
-	while (iterator.hasNext())
-	{ 
-		Map.Entry<String, ArrayList<Object>> entry = iterator.next();
-		ArrayList<Object> product = (ArrayList<Object>) entry.getValue();
-		String productId = (String) product.get(0);
-        String price = (String) product.get(2);
-		double pr = Double.parseDouble(price);
-		int qty = ( (Integer)product.get(3)).intValue();
-            ...
-	}
+
 */
 
 // Print out order summary
