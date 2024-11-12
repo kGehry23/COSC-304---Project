@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>YOUR NAME Grocery Order Processing</title>
+<title>Chop & Co Grocery Order Processing</title>
 </head>
 <body>
 
@@ -24,16 +24,63 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
 
 // Make connection
 
+String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
+String uid="sa" ; 
+String pw="304#sa#pw";
+
+String sql = "SELECT customerId FROM customer WHERE customerId = ?";
+String sql2 = "INSERT INTO ordersummary VALUES ";
+
+
+try ( Connection con = DriverManager.getConnection(url, uid, pw);
+	Statement stmt = con.createStatement();) 
+{
+
+	PreparedStatement pstmt = con.prepareStatement(sql);
+	pstmt.setString(1,custId);
+
+	ResultSet rst = pstmt.executeQuery();
+
+	if(!rst.next())
+	{
+		out.print("<font color = \"#ff0000\">"+"The Entered Customer ID is Invalid. Please return to the Previous Page and Enter a Valid Customer ID."+"</font>");
+	}
+
+	else
+	{
+
+
+
+		// Use retrieval of auto-generated keys.
+		PreparedStatement pstmt1 = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);		
+		
+		ResultSet keys = pstmt1.getGeneratedKeys();
+		keys.next();
+		int orderId = keys.getInt(1);
+
+		out.print("Test: " +orderId);
+
+
+
+
+		
+	}
+
+
+
+}	
+
+catch (SQLException ex)
+{
+	System.err.println("SQLException: " + ex);
+}
+
+					
 // Save order information to database
 
 
-	/*
-	// Use retrieval of auto-generated keys.
-	PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);			
-	ResultSet keys = pstmt.getGeneratedKeys();
-	keys.next();
-	int orderId = keys.getInt(1);
-	*/
+	
+	
 
 // Insert each item into OrderProduct table using OrderId from previous INSERT
 
