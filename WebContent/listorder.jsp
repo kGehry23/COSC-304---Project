@@ -14,6 +14,7 @@
 
 				<%
 					NumberFormat currFormat = NumberFormat.getCurrencyInstance();
+					//SimpleDateFormat dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
 					String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
 					String uid="sa" ; 
@@ -42,7 +43,7 @@
 
 							ResultSet rst2 = pstmt.executeQuery();
 
-							out.println("<tr><td>"+rst.getInt("orderId")+"</td><td>"+rst.getDate("orderDate")+" "+rst.getTime("orderDate")+"</td><td>"+rst.getInt("customerId")+"</td><td>"+rst.getString("firstName")+" "+rst.getString("lastName")+"</td><td>"+currFormat.format(rst.getDouble("totalAmount"))+"</td></tr>");
+							out.println("<tr><td>"+rst.getInt("orderId")+"</td><td>"+rst.getTimestamp("orderDate")+"</td><td>"+rst.getInt("customerId")+"</td><td>"+rst.getString("firstName")+" "+rst.getString("lastName")+"</td><td>"+currFormat.format(rst.getDouble("totalAmount"))+"</td></tr>");
 							out.print("<tr align=\"right\"><td colspan=\"4\">");
 
 							out.print("<table border=\"1\"><tr><th>Product Id</th><th>Quantity</th><th>Price</th></tr>");
@@ -57,15 +58,12 @@
 
 
 							out.print("</table></td></tr>");
-
-							
-
-
-
-							
+	
 						}
 
 						out.println("</table></body></html>");
+
+
 					}
 					catch (SQLException ex)
 					{
