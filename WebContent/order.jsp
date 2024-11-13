@@ -194,6 +194,10 @@ catch (SQLException ex)
 	System.err.println("SQLException: " + ex);
 }
 
+//close DB connection 
+out.close();
+
+
 					
 
 
