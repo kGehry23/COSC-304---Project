@@ -4,7 +4,7 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.time.Instant" %>
+<%@ page import="java.util.*" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
 <html>
@@ -17,6 +17,8 @@
 
 
 <% 
+
+
 // Get customer id
 String custId = request.getParameter("customerId");
 
@@ -64,6 +66,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	else if(productList.isEmpty())
 	{
 		out.print("<h2>"+"Your Cart is Empty!"+"</h2>");
+
 	}
 
 	//if the cusomer ID is valid, an order summary is displayed as well as information about the customer and their order.
@@ -74,9 +77,9 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 		out.println("<th>Price</th><th>Subtotal</th></tr>");
 		
 		
-		Instant instant = Instant.now();
-		Timestamp time = Timestamp.from(instant);
-		out.print(time);
+		TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
+		long now = System.currentTimeMillis();
+		Timestamp time = new Timestamp(now);
 
 		String address = rst.getString("address");
 		String city = rst.getString("city");
