@@ -113,8 +113,17 @@ catch (java.lang.ClassNotFoundException e)
 
 
 		}
-			
-			
+
+
+		out.close();
+
+
+		//close DB connection
+		if (con != null)
+		{
+			con.close();
+		}
+				
 	
 	}
 
@@ -122,23 +131,6 @@ catch (java.lang.ClassNotFoundException e)
 	{
 		System.err.println("SQLException: " + ex);
 	}
-
-
-	//close DB connection 
-	out.close();
-
-
-
-
-
-
-
-// Variable name now contains the search string the user entered
-// Use it to build a query and print out the resultset.  Make sure to use PreparedStatement!
-
-// Make the connection
-
-// Print out the ResultSet
 
 
 
