@@ -186,6 +186,16 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	}
 
 
+		out.close();
+
+
+		//close DB connection
+		if (con != null)
+		{
+			con.close();
+		}
+
+
 
 }	
 
@@ -194,8 +204,7 @@ catch (SQLException ex)
 	System.err.println("SQLException: " + ex);
 }
 
-//close DB connection 
-out.close();
+
 
 
 					
