@@ -20,6 +20,10 @@ if (productList == null)
 {	out.println("<H1>Your shopping cart is empty!</H1>");
 	productList = new HashMap<String, ArrayList<Object>>();
 }
+else if(productList.isEmpty())
+{
+	out.println("<H1>Your shopping cart is empty!</H1>");
+}
 else
 {
 	NumberFormat currFormat = NumberFormat.getCurrencyInstance();
@@ -42,7 +46,9 @@ else
 		out.print("<tr><td>"+product.get(0)+"</td>");
 		out.print("<td>"+product.get(1)+"</td>");
 
-		out.print("<td align=\"center\">"+product.get(3)+"</td>");
+		
+
+		
 		Object price = product.get(2);
 		Object itemqty = product.get(3);
 		double pr = 0;
@@ -63,10 +69,27 @@ else
 		catch (Exception e)
 		{
 			out.println("Invalid quantity for product: "+product.get(0)+" quantity: "+qty);
-		}		
+		}	
+
+	
+
+		out.print("<td align=\"center\">"+product.get(3)+"</form></td>");
+
+		
+
+		String prodId = (String) product.get(0);
+		String act = (String) product.get(0);
+
+	
+		String button = "<button>Remove</button>";
+
+
+		//need to figure out how to get this to work
+		//make an editable field for the quanity
+
 
 		out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
-		out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td></tr>");
+		out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td><td>"+button+"</td></tr>");
 		out.println("</tr>");
 		total = total +pr*qty;
 	}
