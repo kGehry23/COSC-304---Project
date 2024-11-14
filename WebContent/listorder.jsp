@@ -64,15 +64,22 @@
 						out.println("</table></body></html>");
 
 
+						out.close();
+
+
+						//close DB connection
+						if (con != null)
+						{
+							con.close();
+						}
+
+						
 					}
 					catch (SQLException ex)
 					{
 						System.err.println("SQLException: " + ex);
 					}
 
-
-					//close DB connection 
-					out.close();
 
 
 				%>
