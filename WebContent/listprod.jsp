@@ -13,7 +13,11 @@
 <form method="get" action="listprod.jsp">
 <input type="text" name="productName" size="50">
 <input type="submit" value="Submit"><input type="reset" value="Reset"> (Leave blank for all products)
+<br>
+Category: <select name="Category"><option value="All">All</option><option value="Beverages">Beverages</option><option value="Condiments">Condiments</option>
+	<option value="Dairy Products">Dairy Products</option><option value="Produce">Produce</option><option value="Meat/Poultry">Meat/Poultry</option><option value="Seafood">Seafood</option><option value="Confections">Confections</option><option value="Grains/Cereals">Grains/Cereals</option></select>
 </form>
+<br>
 
 
 
@@ -117,8 +121,13 @@ catch (java.lang.ClassNotFoundException e)
 				//define hyperlink with apropriate data for particular product
 				link = "<a href =\"addcart.jsp?id=" + rst1.getInt("productId") + "&name=" + rst1.getString("productName") + "&price=" + rst1.getDouble("productPrice") +"\">" + hyper_text + "</a>";
 
+				PreparedStatement pstmt2 = con.prepareStatement(sql3);
+				pstmt2.setInt(1, rst1.getInt("categoryId"));
+				ResultSet rst2 = pstmt2.executeQuery();
+				rst2.next();
+
 				//add data and hyperlink to table
-				out.println("<tr><td>"+link+"</td><td>"+rst1.getString("productName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
+				out.println("<tr><td>"+link+"</td><td>"+rst1.getString("productName")+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
 
 			}
 
