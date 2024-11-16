@@ -42,6 +42,7 @@ catch (java.lang.ClassNotFoundException e)
 	//define queries for viewing all items, or particular item a user searches for
 	String sql = "SELECT * FROM product";
 	String sql2 = "SELECT * FROM product WHERE productName LIKE ?";
+	String sql3 = "SELECT categoryName FROM category WHERE categoryId = ?";
 
 
 	//attempt connection to DB
@@ -50,7 +51,7 @@ catch (java.lang.ClassNotFoundException e)
   	{	
 
 		//display table headers 
-		out.print("<table></th><th></th><th align=\"left\">Product Name</th><th align=\"left\">Price</th></tr>");
+		out.print("<table></th><th></th><th align=\"left\">Product Name</th><th align=\"left\">Category</th><th align=\"left\">Price</th></tr>");
 
 		//define hyperlink text
 		String link;
@@ -67,14 +68,23 @@ catch (java.lang.ClassNotFoundException e)
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rst = pstmt.executeQuery();
 
+			
+
+
 			//iterate through products in result set and add to table
 			while(rst.next())
 			{
 				//define hyperlink with apropriate data for particular product
 				link = "<a href =\"addcart.jsp?id=" + rst.getInt("productId") + "&name=" + rst.getString("productName") + "&price=" + rst.getDouble("productPrice") +"\">" + hyper_text + "</a>";
 
+
+				PreparedStatement pstmt2 = con.prepareStatement(sql3);
+				pstmt2.setInt(1, rst.getInt("categoryId"));
+				ResultSet rst2 = pstmt2.executeQuery();
+				rst2.next();
+
 				//add data and hyperlink to table
-				out.println("<tr><td>"+link+"</td><td>"+rst.getString("productName")+"</td><td>"+currFormat.format(rst.getDouble("productPrice"))+"</td></tr>");
+				out.println("<tr><td>"+link+"</td><td>"+rst.getString("productName")+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst.getDouble("productPrice"))+"</td></tr>");
 		
 			}
 
@@ -97,6 +107,7 @@ catch (java.lang.ClassNotFoundException e)
 			
 
 			ResultSet rst1 = pstmt1.executeQuery();
+
 
 			
 
