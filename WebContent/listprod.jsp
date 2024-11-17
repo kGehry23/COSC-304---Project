@@ -4,11 +4,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+	body {background-color: powderblue}
+
+	h1 {
+		font-family: cursive;
+	}
+
+	table, td, th {
+  		border: 1px solid;
+		padding: 15px;
+		font-family:Georgia, 'Times New Roman', Times, serif;
+	}
+
+	table {
+		width: 100%;
+  		border-collapse: collapse;
+	}
+
+	td:hover {background-color: rgb(0, 179, 255);}
+
+	h1 {
+		font-family: Georgia, 'Times New Roman', Times, serif;
+	}
+
+	h2 {
+		font-family: Georgia, 'Times New Roman', Times, serif;
+	}
+
+</style>
 <title>Chop & Co Grocery</title>
 </head>
 <body>
 
-<h1>Search for the products you want to buy:</h1>
+<h1 align = "middle">Chop & Co Grocery</h1>
+<br>
+<h2>Search for the products you want to buy:</h2>
 
 <form method="get" action="listprod.jsp">
 <input type="text" name="productName" size="50">

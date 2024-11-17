@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+    body{
+        background-color: powderblue;
+    }
+    h1 {
+		font-family: Georgia, 'Times New Roman', Times, serif;
+	}
+
+	h2 {
+		font-family: Georgia, 'Times New Roman', Times, serif;
+	}
+
+   
+</style>
 <title>Chop & Co CheckOut Line</title>
 </head>
 <body>
