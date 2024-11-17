@@ -28,6 +28,7 @@ Category: <select name="Category"><option value="All">All</option><option value=
 <% // Get product name to search for
 String name = request.getParameter("productName");
 
+//Get category string from dropdown
 String cat = (String)request.getParameter("Category");
 
 		
@@ -52,6 +53,7 @@ catch (java.lang.ClassNotFoundException e)
 	String sql = "SELECT * FROM product";
 	String sql2 = "SELECT * FROM product WHERE productName LIKE ?";
 
+	//query strings for category filtering
 	String sql3 = "SELECT categoryName FROM category WHERE categoryId = ?";
 	String sql4 = "SELECT categoryId FROM category WHERE categoryName = ?";
 	String sql5 = "SELECT * FROM product WHERE categoryId = ?";
@@ -69,7 +71,7 @@ catch (java.lang.ClassNotFoundException e)
 		String hyper_text = "Add to Cart";
 
 
-		//if no prompt is entered into product search bar, all products are listed
+		//if no prompt is entered into product search bar, or no choice is selected from the category dropdown all products are listed
 		if((name == null || name == "") && (cat == null || cat.compareTo("All")==0))
 		{
 
@@ -80,15 +82,13 @@ catch (java.lang.ClassNotFoundException e)
 			ResultSet rst = pstmt.executeQuery();
 
 			
-
-
 			//iterate through products in result set and add to table
 			while(rst.next())
 			{
 				//define hyperlink with apropriate data for particular product
 				link = "<a href =\"addcart.jsp?id=" + rst.getInt("productId") + "&name=" + rst.getString("productName") + "&price=" + rst.getDouble("productPrice") +"\">" + hyper_text + "</a>";
 
-
+				//creates and executes query for category names from a particular categoryId for a product
 				PreparedStatement pstmt2 = con.prepareStatement(sql3);
 				pstmt2.setInt(1, rst.getInt("categoryId"));
 				ResultSet rst2 = pstmt2.executeQuery();
@@ -102,25 +102,24 @@ catch (java.lang.ClassNotFoundException e)
 		}
 
 		
+		//if a cagtegory choice has been made, the choice is not "All", and the nothing has been entered in the search bar a category query is performed
 		else if((cat != null && cat.compareTo("All") != 0) && (name == null || name == ""))
 		{
 
 			out.print("<h2>"+"Results for Products in Category: "+cat+"</h2>");
 
-			//create prepared statement
+			//queries for a categoryId from a selected dropdown category name
 			PreparedStatement pstmt = con.prepareStatement(sql4);
 			pstmt.setString(1,cat);
 			ResultSet rst = pstmt.executeQuery();
 
-
 			rst.next();
 
+			//queries for products based in the categoryId
 			PreparedStatement pstmt1 = con.prepareStatement(sql5);
 			pstmt1.setInt(1,rst.getInt("categoryId"));
 			ResultSet rst1 = pstmt1.executeQuery();
 
-
-			
 
 			//iterate through the products in the result set and add to table
 			while(rst1.next())
@@ -143,7 +142,6 @@ catch (java.lang.ClassNotFoundException e)
 
 
 
-
 		//when a prompt is entered into the search bar, the search is filtered accordingly
 		else
 		{
@@ -162,8 +160,6 @@ catch (java.lang.ClassNotFoundException e)
 
 			ResultSet rst1 = pstmt1.executeQuery();
 
-
-			
 
 			//iterate through the products in the result set and add to table
 			while(rst1.next())
@@ -203,17 +199,6 @@ catch (java.lang.ClassNotFoundException e)
 	}
 
 
-
-
-
-
-// For each product create a link of the form
-// addcart.jsp?id=productId&name=productName&price=productPrice
-// Close connection
-
-// Useful code for formatting currency values:
-// NumberFormat currFormat = NumberFormat.getCurrencyInstance();
-// out.println(currFormat.format(5.0);	// Prints $5.00
 %>
 
 </body>
