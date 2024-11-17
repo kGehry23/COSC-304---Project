@@ -13,17 +13,22 @@
 <form method="get" action="listprod.jsp">
 <input type="text" name="productName" size="50">
 <input type="submit" value="Submit"><input type="reset" value="Reset"> (Leave blank for all products)
-<br>
+</form>
+
+<!-- Drop down menu for category filtering -->
+<form method="get" action="listprod.jsp">
 Category: <select name="Category"><option value="All">All</option><option value="Beverages">Beverages</option><option value="Condiments">Condiments</option>
 	<option value="Dairy Products">Dairy Products</option><option value="Produce">Produce</option><option value="Meat/Poultry">Meat/Poultry</option><option value="Seafood">Seafood</option><option value="Confections">Confections</option><option value="Grains/Cereals">Grains/Cereals</option></select>
+	<input type="submit" value="Submit">
 </form>
-<br>
 
 
 
 
 <% // Get product name to search for
 String name = request.getParameter("productName");
+
+String cat = (String)request.getParameter("Category");
 
 		
 //Note: Forces loading of SQL Server driver
@@ -46,8 +51,10 @@ catch (java.lang.ClassNotFoundException e)
 	//define queries for viewing all items, or particular item a user searches for
 	String sql = "SELECT * FROM product";
 	String sql2 = "SELECT * FROM product WHERE productName LIKE ?";
-	String sql3 = "SELECT categoryName FROM category WHERE categoryId = ?";
 
+	String sql3 = "SELECT categoryName FROM category WHERE categoryId = ?";
+	String sql4 = "SELECT categoryId FROM category WHERE categoryName = ?";
+	String sql5 = "SELECT * FROM product WHERE categoryId = ?";
 
 	//attempt connection to DB
 	try ( Connection con = DriverManager.getConnection(url, uid, pw);
@@ -63,7 +70,7 @@ catch (java.lang.ClassNotFoundException e)
 
 
 		//if no prompt is entered into product search bar, all products are listed
-		if(name == null || name == "")
+		if((name == null || name == "") && (cat == null || cat.compareTo("All")==0))
 		{
 
 			out.print("<h2>"+"All Products"+"</h2>");
@@ -93,6 +100,49 @@ catch (java.lang.ClassNotFoundException e)
 			}
 
 		}
+
+		
+		else if((cat != null && cat.compareTo("All") != 0) && (name == null || name == ""))
+		{
+
+			out.print("<h2>"+"Results for Products in Category: "+cat+"</h2>");
+
+			//create prepared statement
+			PreparedStatement pstmt = con.prepareStatement(sql4);
+			pstmt.setString(1,cat);
+			ResultSet rst = pstmt.executeQuery();
+
+
+			rst.next();
+
+			PreparedStatement pstmt1 = con.prepareStatement(sql5);
+			pstmt1.setInt(1,rst.getInt("categoryId"));
+			ResultSet rst1 = pstmt1.executeQuery();
+
+
+			
+
+			//iterate through the products in the result set and add to table
+			while(rst1.next())
+			{
+				//define hyperlink with apropriate data for particular product
+				link = "<a href =\"addcart.jsp?id=" + rst1.getInt("productId") + "&name=" + rst1.getString("productName") + "&price=" + rst1.getDouble("productPrice") +"\">" + hyper_text + "</a>";
+
+				PreparedStatement pstmt2 = con.prepareStatement(sql3);
+				pstmt2.setInt(1, rst1.getInt("categoryId"));
+				ResultSet rst2 = pstmt2.executeQuery();
+				rst2.next();
+
+				//add data and hyperlink to table
+				out.println("<tr><td>"+link+"</td><td>"+rst1.getString("productName")+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
+
+			}
+
+
+		}
+
+
+
 
 		//when a prompt is entered into the search bar, the search is filtered accordingly
 		else
