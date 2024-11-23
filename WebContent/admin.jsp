@@ -19,6 +19,14 @@
     NumberFormat currFormat = NumberFormat.getCurrencyInstance();
 
 
+    String userName = (String) session.getAttribute("authenticatedUser");
+
+	if (userName == null){
+	    out.println("<h1>You must log in to access this page </h1>");
+	    return;
+	}
+
+
     //DB connection credentials
     String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
     String uid="sa" ; 
