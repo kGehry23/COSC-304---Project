@@ -16,12 +16,10 @@ table, td, th {
 		font-family:Georgia, 'Times New Roman', Times, serif;
 	
 	}
-
 table {
 	width: 100%;
   	border-collapse: collapse;
 }
-
 
 h1 {
 	font-family: Georgia, 'Times New Roman', Times, serif;
@@ -35,12 +33,11 @@ h2 {
 </head>
 <body>
 
-	<script>
-		function func(id)
-		{
-			productList.remove(id);
-		}
-	</script>
+	
+
+	
+<a href = "listorder.jsp">Orders</a>
+<a href = "listprod.jsp">Product List</a>
 
 <%
 // Get the current list of products
@@ -109,22 +106,19 @@ else
 
 		
 
+
+		out.print("<td align=\"center\">"+product.get(3)+"</td>");
+
+
 	
-
-		out.print("<td align=\"center\"><form><input type =\"text\" name = \"quant\" size = \"3\" value = \""+product.get(3)+"\"></form></td>");
-
-		
-
 		prodId = (String) product.get(0);
 		String act = (String) product.get(0);
 
-
-
-
 		out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
 		out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td>");
-		
 		total = total +pr*qty;
+
+
 	}
 
 
@@ -138,6 +132,48 @@ else
 
 }
 %>
+
+
+<script>
+	function add()
+	{
+
+		var val = parseInt(document.getElementById("quant").value);
+		document.getElementById("quant").value = val + 1;
+		product.get(3) = val+1;
+
+
+		//document.getElementById("quant").value =  + 1;
+		
+	}
+</script>
+
+<script>
+	function sub()
+	{
+
+		var val = parseInt(document.getElementById("quant").value);
+		if(val>0)
+		{
+			document.getElementById("quant").value = val - 1;
+		}
+			
+
+		//document.getElementById("quant").value =  + 1;
+		
+	}
+
+</script>
+
+<script>
+	function remove(val)
+	{
+		
+		productList.remove(val);
+	}
+</script>
+
+
 <h2><a href="listprod.jsp">Continue Shopping</a></h2>
 
 </body>
