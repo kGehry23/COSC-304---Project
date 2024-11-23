@@ -31,11 +31,14 @@
 	h2 {
 		font-family: Georgia, 'Times New Roman', Times, serif;
 	}
-
 </style>
 <title>Chop & Co Grocery</title>
 </head>
 <body>
+
+<!-- Links for viewing cart or order list -->
+<a href = "listorder.jsp">Orders</a>
+<a href = "showcart.jsp">Cart</a>
 
 <h1 align = "middle">Chop & Co Grocery</h1>
 <br>
@@ -211,7 +214,7 @@ catch (java.lang.ClassNotFoundException e)
 
 		}
 
-
+		//close output
 		out.close();
 
 
