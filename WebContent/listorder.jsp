@@ -5,6 +5,11 @@
 			<html>
 
 			<head>
+				<style>
+					body {background-color: powderblue}
+
+			
+				</style>
 				<title>Chop & Co Grocery Order List</title>
 			</head>
 

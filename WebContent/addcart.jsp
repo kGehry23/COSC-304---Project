@@ -24,6 +24,7 @@ product.add(name);
 product.add(price);
 product.add(quantity);
 
+
 // Update quantity if add same item to order again
 if (productList.containsKey(id))
 {	product = (ArrayList<Object>) productList.get(id);

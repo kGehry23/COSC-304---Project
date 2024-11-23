@@ -9,6 +9,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+	body{
+        background-color: powderblue;
+    }
+    h1 {
+		font-family: Georgia, 'Times New Roman', Times, serif;
+	}
+
+	h2 {
+		font-family: Georgia, 'Times New Roman', Times, serif;
+	}
+
+	table, td, th {
+  		border: 1px solid;
+		padding: 15px;
+		font-family:Georgia, 'Times New Roman', Times, serif;
+	}
+
+	table {
+		width: 100%;
+  		border-collapse: collapse;
+	}
+</style>
 <title>Chop & Co Grocery Order Processing</title>
 </head>
 <body>
