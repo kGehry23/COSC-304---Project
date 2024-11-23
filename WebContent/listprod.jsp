@@ -102,6 +102,7 @@ catch (java.lang.ClassNotFoundException e)
 
 		//define hyperlink text
 		String link;
+		String prod_link;
 		String hyper_text = "Add to Cart";
 
 
@@ -119,8 +120,13 @@ catch (java.lang.ClassNotFoundException e)
 			//iterate through products in result set and add to table
 			while(rst.next())
 			{
-				//define hyperlink with apropriate data for particular product
+
 				link = "<a href =\"addcart.jsp?id=" + rst.getInt("productId") + "&name=" + rst.getString("productName") + "&price=" + rst.getDouble("productPrice") +"\">" + hyper_text + "</a>";
+
+
+				//define hyperlink with apropriate data for particular product
+				prod_link = "<a href =\"product.jsp?id=" + rst.getInt("productId") + "\">" + rst.getString("productName") + "</a>";
+
 
 				//creates and executes query for category names from a particular categoryId for a product
 				PreparedStatement pstmt2 = con.prepareStatement(sql3);
@@ -129,7 +135,7 @@ catch (java.lang.ClassNotFoundException e)
 				rst2.next();
 
 				//add data and hyperlink to table
-				out.println("<tr><td>"+link+"</td><td>"+rst.getString("productName")+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst.getDouble("productPrice"))+"</td></tr>");
+				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst.getDouble("productPrice"))+"</td></tr>");
 		
 			}
 
@@ -161,13 +167,16 @@ catch (java.lang.ClassNotFoundException e)
 				//define hyperlink with apropriate data for particular product
 				link = "<a href =\"addcart.jsp?id=" + rst1.getInt("productId") + "&name=" + rst1.getString("productName") + "&price=" + rst1.getDouble("productPrice") +"\">" + hyper_text + "</a>";
 
+				//define hyperlink with apropriate data for particular product
+				prod_link = "<a href =\"product.jsp?id=" + rst1.getInt("productId") + "\">" + rst1.getString("productName") + "</a>";
+
 				PreparedStatement pstmt2 = con.prepareStatement(sql3);
 				pstmt2.setInt(1, rst1.getInt("categoryId"));
 				ResultSet rst2 = pstmt2.executeQuery();
 				rst2.next();
 
 				//add data and hyperlink to table
-				out.println("<tr><td>"+link+"</td><td>"+rst1.getString("productName")+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
+				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
 
 			}
 
