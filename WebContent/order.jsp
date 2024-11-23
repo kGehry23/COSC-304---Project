@@ -36,9 +36,6 @@
 </head>
 <body>
 
-<a href = "listorder.jsp">Orders</a>
-<a href = "listprod.jsp">Product List</a>
-
 <h1>Your Order Summary</h1>
 
 
@@ -80,28 +77,11 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	pstmt.setString(1,custId);
 
 	ResultSet rst = pstmt.executeQuery();
-	
-	
-	String check = "";
-
-	//check if userId is an integer
-	try
-	{
-		int i = Integer.parseInt(custId);
-	}
-	catch(NumberFormatException e)
-	{
-		check = "NAN";
-
-	}
-		
 
 	//If the customer ID is not in the DB, and error message is displayed.
-	if(check.compareTo("NAN")==0 || !rst.next())
+	if(!rst.next())
 	{
 		out.print("<h1><font color = \"#ff0000\">"+"The Entered Customer ID is Invalid. Please return to the Previous Page and Enter a Valid Customer ID."+"</font></h1>");
-		out.print("<a href = \"showcart.jsp\">Return to Cart</a>");
-
 	}
 
 	//if the cusomer ID is valid, an order summary is displayed as well as information about the customer and their order.
