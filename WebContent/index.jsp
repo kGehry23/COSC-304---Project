@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+		body {background-color: powderblue}
+	</style>
         <title>Chop & Co Grocery Main Page</title>
 </head>
 <body>
-<h1 align="center">Welcome to Ray's Grocery</h1>
+<h1 align="center">Welcome to Chop and Co Grocery</h1>
 
 <h2 align="center"><a href="login.jsp">Login</a></h2>
 
@@ -27,6 +30,8 @@
 <h4 align="center"><a href="ship.jsp?orderId=1">Test Ship orderId=1</a></h4>
 
 <h4 align="center"><a href="ship.jsp?orderId=3">Test Ship orderId=3</a></h4>
+
+<h4 align="center"><a href="ship.jsp?orderId=12">Test Ship orderId=12</a></h4>
 
 </body>
 </head>

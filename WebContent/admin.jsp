@@ -1,8 +1,9 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        body {background-color: powderblue}
+    </style>
 <title>Administrator Page</title>
 </head>
 <body>

@@ -5,6 +5,9 @@
 
 <html>
 <head>
+    <style>
+        body {background-color: powderblue}
+    </style>
 <title>Chop & Co - Product Information</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>

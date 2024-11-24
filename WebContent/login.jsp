@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+		body {background-color: powderblue}
+	</style>
 <title>Login Screen</title>
 </head>
 <body>

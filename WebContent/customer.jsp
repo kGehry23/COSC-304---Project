@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+		body {background-color: powderblue}
+	</style>
 <title>Customer Page</title>
 </head>
 <body>
@@ -9,22 +12,22 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ include file="jdbc.jsp" %>
 
+
+
 <%
+
 	String userName = (String) session.getAttribute("authenticatedUser");
 
 	if (userName == null){
 		out.println("<h1>You must log in to access this page </h1>");
 		return;
-	}
-%>
-
-<%
+	}		
 
 
 //DB connection credentials
-    String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
-    String uid="sa" ; 
-    String pw="304#sa#pw";
+String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
+String uid="sa" ; 
+String pw="304#sa#pw";
 
 //customerID, fistName, lastName, email, phoneNum, address, city,state, postalCode, country, userID
 // TODO: Print Customer information
