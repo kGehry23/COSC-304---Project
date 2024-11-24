@@ -10,6 +10,9 @@
 
 <html>
 <head>
+	<style>
+		body {background-color: powderblue}
+	</style>
 <title>Chop and Co Grocery Shipment Processing</title>
 </head>
 <body>
