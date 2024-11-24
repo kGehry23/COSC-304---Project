@@ -11,21 +11,39 @@
 
 <%
 	String userName = (String) session.getAttribute("authenticatedUser");
+
 	if (userName == null){
-	output.println("<h1>You must log in to access this page </h1>")
-	return;
+		out.println("<h1>You must log in to access this page </h1>");
+		return;
 	}
 %>
 
 <%
+
+
+//DB connection credentials
+    String url="jdbc:sqlserver://cosc304_sqlserver:1433;DatabaseName=orders;TrustServerCertificate=True"; 
+    String uid="sa" ; 
+    String pw="304#sa#pw";
+
 //customerID, fistName, lastName, email, phoneNum, address, city,state, postalCode, country, userID
 // TODO: Print Customer information
-String sql = "SELECT * FROM customer WHERE userName = ?";
-PreparedStatement stmt = con.prepareStatement(sql);
-stmt.setString(1,userName);
-ResultSet rs = stmt.executeQuery();
+String sql = "SELECT * FROM customer WHERE userid = ?";
 
-if (rs.next()){
+
+
+
+//connect to DB
+try ( Connection con = DriverManager.getConnection(url, uid, pw);
+	Statement stmt = con.createStatement();) 
+{	
+	
+	PreparedStatement pstmt = con.prepareStatement(sql);
+	pstmt.setString(1,userName);
+	ResultSet rs = pstmt.executeQuery();
+
+	rs.next();
+
 	int customerID = rs.getInt("customerId");
 	String firstName = rs.getString("firstName");
 	String lastName = rs.getString("lastName");
@@ -40,32 +58,28 @@ if (rs.next()){
 	//String = rs.getString("");
 
 	out.println("<h2> Customer Information </h2>");
-	out.println("<table border '1' >");
-	out.println("<tr><td>Customer ID<td><td>"+ customerID + >"</td><tr>");
-	out.println("<tr><td>First Name<td><td>"+ firstName + >"</td><tr>");
-	out.println("<tr><td>Last Name<td><td>"+ lastName + >"</td><tr>");
-	out.println("<tr><td>Email<td><td>"+ email + >"</td><tr>");
-	out.println("<tr><td>Phone<td><td>"+ phoneNum + >"</td><tr>");
-	out.println("<tr><td>Address<td><td>"+ address + >"</td><tr>");
-	out.println("<tr><td>City<td><td>"+ city + >"</td><tr>");
-	out.println("<tr><td>State<td><td>"+ state + >"</td><tr>");
-	out.println("<tr><td>postalCode<td><td>"+ postalCode + >"</td><tr>");
-	out.println("<tr><td>Country<td><td>"+ country + >"</td><tr>");
-	out.println("<tr><td>UserId</td><td>"+ userID + >"</td><tr>");
-	out.println("</table");
-	
+	out.print("<table border=\"1\">");
+	out.println("<tr><td>Customer ID</td><td>"+ customerID +"</td><tr>");
+	out.println("<tr><td>First Name</td><td>"+ firstName +"</td><tr>");
+	out.println("<tr><td>Last Name</td><td>"+ lastName +"</td><tr>");
+	out.println("<tr><td>Email</td><td>"+ email +"</td><tr>");
+	out.println("<tr><td>Phone</td><td>"+ phoneNum +"</td><tr>");
+	out.println("<tr><td>Address</td><td>"+ address +"</td><tr>");
+	out.println("<tr><td>City</td><td>"+ city +"</td><tr>");
+	out.println("<tr><td>State</td><td>"+ state +"</td><tr>");
+	out.println("<tr><td>postalCode</td><td>"+ postalCode +"</td><tr>");
+	out.println("<tr><td>Country</td><td>"+ country +"</td><tr>");
+	out.println("<tr><td>UserId</td><td>"+ userID +"</td><tr>");
+	out.println("</table>");
 
-}else{
-	out.println("User Not Found")
+
 }
 
-catch (SQLException e){
-	out.println("Error: "+ e); 
-}finally{
-	try
+catch (SQLException ex)
+{
+	System.err.println("SQLException: " + ex);
 }
 
-// Make sure to close connection
 
 %>
 
