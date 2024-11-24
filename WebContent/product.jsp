@@ -6,8 +6,8 @@
 <html>
 <head>
     <style>
-        body {background-color: powderblue}
-    </style>
+		body {background-color: powderblue}
+	</style>
 <title>Chop & Co - Product Information</title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -48,8 +48,10 @@
         String prodName = rst.getString("productName");
         out.print("<h1>"+prodName+"</h1><br>");
 
+        String prodURL = rst.getString("productImageURL");
 
-        out.print("<img src = \"displayImage.jsp?id=" + productId + "\">");
+
+        out.print("<img src = \"" +prodURL+ "\">");
 
         out.print("<br><br><b>Product Id: </b>" +productId);
         out.print("<br><b>Price: </b>" +currFormat.format(rst.getDouble("productPrice")));

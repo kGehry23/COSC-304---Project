@@ -10,7 +10,7 @@
 <html>
 <head>
 <style>
-	
+
 	body{
         background-color: powderblue;
     }
@@ -32,6 +32,7 @@
 		width: 100%;
   		border-collapse: collapse;
 	}
+	
 </style>
 <title>Chop & Co Grocery Order Processing</title>
 </head>
