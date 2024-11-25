@@ -10,4 +10,8 @@ Link to the website once docker is running:
 
 http://localhost/shop/index.jsp
 
+To reload the DB: 
+
+http://localhost/shop/loaddata.jsp
+
 
