@@ -50,8 +50,12 @@
 
         String prodURL = rst.getString("productImageURL");
 
-
+        //code to dipslay image for each product
         out.print("<img src = \"" +prodURL+ "\">");
+
+        //code added to display second image for frst prodcut
+        if(Integer.parseInt(productId) == 1)
+            out.println("<img src=\"displayImage.jsp?id="+productId+"\">");
 
         out.print("<br><br><b>Product Id: </b>" +productId);
         out.print("<br><b>Price: </b>" +currFormat.format(rst.getDouble("productPrice")));
