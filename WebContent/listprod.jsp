@@ -2,19 +2,67 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
-<html>
+<!-- <html>
 <head>
-<style>
-	body {background-color: powderblue}
+
+<title>Chop & Co Grocery</title>
+</head>
+<body> -->
+
+	<html>
+		<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style>
+		body {margin: 0;}
+		
+		ul.topnav {
+		  list-style-type: none;
+		  margin: 0;
+		  padding: 0;
+		  overflow: hidden;
+		  background-color: #333;
+		}
+		
+		ul.topnav li {float: left;}
+		
+		ul.topnav li a {
+		  display: block;
+		  color: white;
+		  text-align: center;
+		  padding: 14px 16px;
+		  text-decoration: none;
+		}
+		
+		ul.topnav li a:hover:not(.active) {background-color: #0454aa;}
+		
+		ul.topnav li a.active {background-color: #0454aa;}
+		
+		ul.topnav li.right {float: right;}
+		
+		@media screen and (max-width: 600px) {
+		  ul.topnav li.right, 
+		  ul.topnav li {float: none;}
+		}
+
+
+	body { background-color: #555}
 
 	h1 {
-		font-family: cursive;
+		font-family: "Barlow", arial, sans-serif;
+		font-size: 50px;
+		text-shadow: 2px 2px #0454aa;
 	}
 
 	table, td, th {
-  		border: 1px solid;
+  		border: 0.5px solid;
 		padding: 15px;
 		font-family:Georgia, 'Times New Roman', Times, serif;
+		background-color: #444;
+	}
+
+	tr {
+		color:black;
+ 		font-size:18px;
 	}
 
 	table {
@@ -22,31 +70,38 @@
   		border-collapse: collapse;
 	}
 
-	td:hover {background-color: rgb(0, 179, 255);}
-
-	h1 {
-		font-family: Georgia, 'Times New Roman', Times, serif;
-	}
+	td:hover { background-color: #0454aa;}
 
 	h2 {
 		font-family: Georgia, 'Times New Roman', Times, serif;
 	}
-</style>
-<title>Chop & Co Grocery</title>
-</head>
-<body>
 
-<!-- Links for viewing cart or order list -->
-<a href = "listorder.jsp">Orders</a>
-<a href = "showcart.jsp">Cart</a>
+		</style>
+		</head>
+		<body>
+			
+		<ul class="topnav">
+		  <li><a href = "listorder.jsp">Orders</a></li>
+		  <li><a href = "showcart.jsp">Cart</a></li>
+		  <li class="right"><a href="create_account.jsp">Create Account</a></li>
+		  <li class="right"><a href="logout.jsp">Log out</a></li>
+		  <li class="right"><a href = "login.jsp">Login</a></li>
+
+		</ul>
+		
+		
+		</body>
+		</html>
+
+
 
 <h1 align = "middle">Chop & Co Grocery</h1>
 <br>
-<h2>Search for the products you want to buy:</h2>
 
-<form method="get" action="listprod.jsp">
-<input type="text" name="productName" size="50">
-<input type="submit" value="Submit"><input type="reset" value="Reset"> (Leave blank for all products)
+
+<form align = "middle", method="get" action="listprod.jsp">
+<input type="text" name="productName" size="50" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
+<input type="submit" value="Submit" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;"><input type="reset" value="Reset" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
 </form>
 
 <!-- Drop down menu for category filtering -->
@@ -121,11 +176,11 @@ catch (java.lang.ClassNotFoundException e)
 			while(rst.next())
 			{
 
-				link = "<a href =\"addcart.jsp?id=" + rst.getInt("productId") + "&name=" + rst.getString("productName") + "&price=" + rst.getDouble("productPrice") +"\">" + hyper_text + "</a>";
+				link = "<a href =\"addcart.jsp?id=" + rst.getInt("productId") + "&name=" + rst.getString("productName") + "&price=" + rst.getDouble("productPrice") +"\"style=\"color: LightSlateGray ;\">" + hyper_text + "</a>";
 
 
 				//define hyperlink with apropriate data for particular product
-				prod_link = "<a href =\"product.jsp?id=" + rst.getInt("productId") + "\">" + rst.getString("productName") + "</a>";
+				prod_link = "<a href =\"product.jsp?id=" + rst.getInt("productId") + "\"style=\"color: LightSlateGray ;\">" + rst.getString("productName") + "</a>";
 
 
 				//creates and executes query for category names from a particular categoryId for a product
@@ -165,10 +220,10 @@ catch (java.lang.ClassNotFoundException e)
 			while(rst1.next())
 			{
 				//define hyperlink with apropriate data for particular product
-				link = "<a href =\"addcart.jsp?id=" + rst1.getInt("productId") + "&name=" + rst1.getString("productName") + "&price=" + rst1.getDouble("productPrice") +"\">" + hyper_text + "</a>";
+				link = "<a href =\"addcart.jsp?id=" + rst1.getInt("productId") + "&name=" + rst1.getString("productName") + "&price=" + rst1.getDouble("productPrice") +"\"style=\"color: LightSlateGray ;\">" + hyper_text + "</a>";
 
 				//define hyperlink with apropriate data for particular product
-				prod_link = "<a href =\"product.jsp?id=" + rst1.getInt("productId") + "\">" + rst1.getString("productName") + "</a>";
+				prod_link = "<a href =\"product.jsp?id=" + rst1.getInt("productId") + "\"style=\"color: LightSlateGray ;\">" + rst1.getString("productName") + "</a>";
 
 				PreparedStatement pstmt2 = con.prepareStatement(sql3);
 				pstmt2.setInt(1, rst1.getInt("categoryId"));
@@ -208,7 +263,10 @@ catch (java.lang.ClassNotFoundException e)
 			while(rst1.next())
 			{
 				//define hyperlink with apropriate data for particular product
-				link = "<a href =\"addcart.jsp?id=" + rst1.getInt("productId") + "&name=" + rst1.getString("productName") + "&price=" + rst1.getDouble("productPrice") +"\">" + hyper_text + "</a>";
+				link = "<a href =\"addcart.jsp?id=" + rst1.getInt("productId") + "&name=" + rst1.getString("productName") + "&price=" + rst1.getDouble("productPrice") +"\"style=\"color: LightSlateGray ;\">" + hyper_text + "</a>";
+
+				//define hyperlink with apropriate data for particular product
+				prod_link = "<a href =\"product.jsp?id=" + rst1.getInt("productId") + "\"style=\"color: LightSlateGray ;\">" + rst1.getString("productName") + "</a>";
 
 				PreparedStatement pstmt2 = con.prepareStatement(sql3);
 				pstmt2.setInt(1, rst1.getInt("categoryId"));
@@ -216,7 +274,7 @@ catch (java.lang.ClassNotFoundException e)
 				rst2.next();
 
 				//add data and hyperlink to table
-				out.println("<tr><td>"+link+"</td><td>"+rst1.getString("productName")+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
+				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
 
 			}
 
