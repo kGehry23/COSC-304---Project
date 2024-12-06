@@ -123,6 +123,11 @@
 		}
 
 
+		else{
+			out.print("That Order Id Does Not Exist");
+		}
+
+
 	}
 
 	catch (SQLException ex)
