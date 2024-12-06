@@ -116,6 +116,21 @@
 
 <%
 
+
+    String username = session.getAttribute("authenticatedUser") == null ?
+            null : session.getAttribute("authenticatedUser").toString();
+
+    String userGreeting = "Guest";
+    String loginLink = "login.jsp";
+    String loginMsg = "Login";
+
+    if (username != null) {
+        userGreeting = username;
+        loginLink = "logout.jsp";
+        loginMsg = "Logout";
+    }
+
+
     String user_name = request.getParameter("username");
     String user_password = request.getParameter("password");
     String first_name = request.getParameter("first_name");
