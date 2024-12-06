@@ -1,6 +1,8 @@
 <%@ page import="java.sql.*,java.net.URLEncoder" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
+
+
 <!DOCTYPE html>
 <!-- <html>
 <head>
@@ -83,12 +85,11 @@
 		<ul class="topnav">
 		  <li><a href = "listorder.jsp">Orders</a></li>
 		  <li><a href = "showcart.jsp">Cart</a></li>
-		  <li class="right"><a href="create_account.jsp">Create Account</a></li>
 		  <li class="right"><a href="logout.jsp">Log out</a></li>
 		  <li class="right"><a href = "login.jsp">Login</a></li>
 
 		</ul>
-		
+
 		
 		</body>
 		</html>
@@ -153,7 +154,7 @@ catch (java.lang.ClassNotFoundException e)
   	{	
 
 		//display table headers 
-		out.print("<table></th><th></th><th align=\"left\">Product Name</th><th align=\"left\">Category</th><th align=\"left\">Price</th></tr>");
+		out.print("<table></th><th></th><th align=\"left\">Product Name</th><th align=\"left\">Category</th><th align=\"left\">Price</th><th align=\"left\">Warehouse Number</th><th align=\"left\">Available Quantity</th></tr>");
 
 		//define hyperlink text
 		String link;
