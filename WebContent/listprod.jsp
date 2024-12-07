@@ -143,11 +143,14 @@ catch (java.lang.ClassNotFoundException e)
 	String sql = "SELECT * FROM product";
 	String sql2 = "SELECT * FROM product WHERE productName LIKE ?";
 
-	//query strings for category filtering
+	//query strings for category filterings
 	String sql3 = "SELECT categoryName FROM category WHERE categoryId = ?";
 	String sql4 = "SELECT categoryId FROM category WHERE categoryName = ?";
 	String sql5 = "SELECT * FROM product WHERE categoryId = ?";
-
+	
+	//warehouse
+	String sql6 = "Select warehouseID from productinventory where productID = ?";
+	String sql7 = "Select quantity from productinventory where productID = ?";
 	//attempt connection to DB
 	try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	Statement stmt = con.createStatement();) 
@@ -190,8 +193,19 @@ catch (java.lang.ClassNotFoundException e)
 				ResultSet rst2 = pstmt2.executeQuery();
 				rst2.next();
 
+				PreparedStatement pstmt3 = con.prepareStatement(sql6);
+				pstmt3.setInt(1, rst.getInt("productID"));
+				ResultSet rst3 = pstmt3.executeQuery();
+				rst3.next();
+
+				PreparedStatement pstmt4 = con.prepareStatement(sql7);
+				pstmt4.setInt(1, rst.getInt("productID"));
+				ResultSet rst4 = pstmt4.executeQuery();
+				rst4.next();
+
 				//add data and hyperlink to table
-				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst.getDouble("productPrice"))+"</td></tr>");
+				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst.getDouble("productPrice"))+"</td><td>"+ rst3.getInt("warehouseId") +"</td><td>"+rst4.getInt("quantity") +"</td></tr>");
+
 		
 			}
 
@@ -230,9 +244,18 @@ catch (java.lang.ClassNotFoundException e)
 				pstmt2.setInt(1, rst1.getInt("categoryId"));
 				ResultSet rst2 = pstmt2.executeQuery();
 				rst2.next();
+				PreparedStatement pstmt3 = con.prepareStatement(sql6);
+				pstmt3.setInt(1, rst1.getInt("productID"));
+				ResultSet rst3 = pstmt3.executeQuery();
+				rst3.next();
+
+				PreparedStatement pstmt4 = con.prepareStatement(sql7);
+				pstmt4.setInt(1, rst1.getInt("productID"));
+				ResultSet rst4 = pstmt4.executeQuery();
+				rst4.next();
 
 				//add data and hyperlink to table
-				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
+				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td><td>"+ rst3.getInt("warehouseId") +"</td><td>"+rst4.getInt("quantity") +"</td></tr>");
 
 			}
 
@@ -274,8 +297,18 @@ catch (java.lang.ClassNotFoundException e)
 				ResultSet rst2 = pstmt2.executeQuery();
 				rst2.next();
 
+				PreparedStatement pstmt3 = con.prepareStatement(sql6);
+				pstmt3.setInt(1, rst1.getInt("productID"));
+				ResultSet rst3 = pstmt3.executeQuery();
+				rst3.next();
+
+				PreparedStatement pstmt4 = con.prepareStatement(sql7);
+				pstmt4.setInt(1, rst1.getInt("productID"));
+				ResultSet rst4 = pstmt4.executeQuery();
+				rst4.next();
+
 				//add data and hyperlink to table
-				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td></tr>");
+				out.println("<tr><td>"+link+"</td><td>"+prod_link+"</td><td>"+rst2.getString("categoryName")+"</td><td>"+currFormat.format(rst1.getDouble("productPrice"))+"</td><td>"+ rst3.getInt("warehouseId") +"</td><td>"+rst4.getInt("quantity") +"</td></tr>");
 
 			}
 
