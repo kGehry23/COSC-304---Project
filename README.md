@@ -8,7 +8,7 @@
 
 Link to the website once docker is running: 
 
-[http://localhost/shop/index.jsp](http://localhost/shop/listprod.jsp?productName=)
+http://localhost/shop/listprod.jsp?productName=
 
 To reload the DB: 
 
