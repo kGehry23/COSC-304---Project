@@ -5,39 +5,94 @@
 <%@ page import="java.util.Map" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF8"%>
 <!DOCTYPE html>
-<html>
 <head>
-<style>
-body {background-color: powderblue}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    body {margin: 0;}
+    
+    ul.topnav {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+    
+    ul.topnav li {float: left;}
+    
+    ul.topnav li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    
+    ul.topnav li a:hover:not(.active) {background-color: #0454aa;}
+    
+    ul.topnav li a.active {background-color: #0454aa;}
+    
+    ul.topnav li.right {float: right;}
+    
+    @media screen and (max-width: 600px) {
+      ul.topnav li.right, 
+      ul.topnav li {float: none;}
+    }
 
-table, td, th {
-  		border: 1px solid;
+
+	body { background-color: #555}
+
+	h1 {
+		font-family: "Barlow", arial, sans-serif;
+		font-size: 50px;
+		text-shadow: 2px 2px #0454aa;
+	}
+
+	table, td, th {
+  		border: 0.5px solid;
 		padding: 15px;
 		font-family:Georgia, 'Times New Roman', Times, serif;
-	
+		background-color: #444;
 	}
-table {
-	width: 100%;
-  	border-collapse: collapse;
-}
 
-h1 {
-	font-family: Georgia, 'Times New Roman', Times, serif;
-}
+	tr {
+		color:black;
+ 		font-size:18px;
+	}
 
-h2 {
-	font-family: Georgia, 'Times New Roman', Times, serif;
-}
-</style>
-<title>Your Shopping Cart</title>
-</head>
-<body>
+	table {
+		width: 100%;
+  		border-collapse: collapse;
+	}
+
+	td:hover { background-color: #0454aa;}
+
+	h2 {
+		font-family: Georgia, 'Times New Roman', Times, serif;
+	}
+
+		</style>
+		</head>
+		<body>
+			
+		<ul class="topnav">
+		  <li><a href = "listorder.jsp">Orders</a></li>
+		  <li><a href = "listprod.jsp">Product List</a></li>
+		  <li class="right"><a href="logout.jsp">Log out</a></li>
+		  <li class="right"><a href = "login.jsp">Login</a></li>
+		  <li class="right"><a href = "admin.jsp">Administrator Page</a></li>
+		  <li class="right"><a href = "create_account.jsp">Create Account</a></li>
+		  <li class="right"><a href = "index.jsp">Index</a></li>
+
+
+		</ul>
+
+		
+		</body>
+		</html>
 
 	
 
-	
-<a href = "listorder.jsp">Orders</a>
-<a href = "listprod.jsp">Product List</a>
 
 <%
 // Get the current list of products
@@ -48,7 +103,7 @@ HashMap<String, ArrayList<Object>> productList = (HashMap<String, ArrayList<Obje
 String prodId = "";
 
 if (productList == null)
-{	out.println("<H1>Your shopping cart is empty!</H1>");
+{	out.println("<H1 align=\"center\">Your shopping cart is empty!</H1>");
 	productList = new HashMap<String, ArrayList<Object>>();
 }
 else if(productList.isEmpty())
@@ -131,56 +186,21 @@ else
 			+"<td align=\"right\">"+currFormat.format(total)+"</td></tr>");
 	out.println("</table>");
 
-	out.println("<h2><a href=\"checkout.jsp\">Check Out</a></h2>");
 
-
-	
 
 }
 %>
 
+<br>
+<br>
+<form align = "middle", method="get" action="checkout.jsp">
+	<input type="submit" value="Check Out" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
+	</form>
+<br>
+<form align = "middle", method="get" action="listprod.jsp">
+<input type="submit" value="Continue Shopping" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
+</form>
 
-<script>
-	function add()
-	{
-
-		var val = parseInt(document.getElementById("quant").value);
-		document.getElementById("quant").value = val + 1;
-		product.get(3) = val+1;
-
-
-		//document.getElementById("quant").value =  + 1;
-		
-	}
-</script>
-
-<script>
-	function sub()
-	{
-
-		var val = parseInt(document.getElementById("quant").value);
-		if(val>0)
-		{
-			document.getElementById("quant").value = val - 1;
-		}
-			
-
-		//document.getElementById("quant").value =  + 1;
-		
-	}
-
-</script>
-
-<script>
-	function remove(val)
-	{
-		
-		productList.remove(val);
-	}
-</script>
-
-
-<h2><a href="listprod.jsp">Continue Shopping</a></h2>
 
 </body>
 </html> 
