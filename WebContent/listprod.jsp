@@ -71,6 +71,8 @@
 	}
 
 		</style>
+
+		
 		</head>
 		<body>
 			
@@ -85,6 +87,8 @@
 
 
 		</ul>
+
+		<jsp:include page="header.jsp" />
 
 		
 		</body>

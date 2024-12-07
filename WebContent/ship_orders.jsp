@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-    body {margin: 0;}
+        body {background-color: powderblue}
+
     
     ul.topnav {
       list-style-type: none;
@@ -66,44 +67,42 @@
 	}
 
 		</style>
-
-		
 		</head>
 		<body>
 			
 		<ul class="topnav">
-		  <li><a href = "listorder.jsp">Orders</a></li>
-		  <li><a href = "showcart.jsp">Cart</a></li>
-		  <li class="right"><a href="logout.jsp">Log out</a></li>
-		  <li class="right"><a href = "login.jsp">Login</a></li>
-		  <li class="right"><a href = "admin.jsp">Administrator Page</a></li>
-		  <li class="right"><a href = "create_account.jsp">Create Account</a></li>
-		  <li class="right"><a href = "index.jsp">Index</a></li>
-
+		  <li><a href = "add_product.jsp">Add Product</a></li>
+          <li><a href = "remove_product.jsp">Remove Product</a></li>
+		  <li><a href = "listprod.jsp">Product List</a></li>
+          <li><a href = "customer.jsp">View All Users</a></li>
+          <li class="right"><a href="logout.jsp">Log out</a></li>
+		  <li class="right"><a href="login.jsp">Log In</a></li>
 
 		</ul>
 
-		<jsp:include page="header.jsp" />
+        <jsp:include page="header.jsp" />
 
 		
 		</body>
 		</html>
 	
-<title>Chop & Co CheckOut Line</title>
+    </style>
+<title>Administrator Page</title>
 </head>
 <body>
 
-<!-- Link to go back to cart -->
-<h1  align = "middle">Enter your customer id to complete the transaction:</h1>
 
+    
+<h4 align="center"><a href="ship.jsp?orderId=1">Test Ship orderId=1</a></h4>
 
-<form align = "middle" method="get" action="order.jsp">
-<input type="text" name="customerId" placeholder="Customer Id" size="50" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
-<input type="submit" value="Submit" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;"><input type="submit" value="Reset" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
-</form>
+<h4 align="center"><a href="ship.jsp?orderId=3">Test Ship orderId=3</a></h4>
 
+<h4 align="center"><a href="ship.jsp?orderId=12">Test Ship orderId=12</a></h4>
 
 
 </body>
 </html>
+
+
+
 
