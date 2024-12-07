@@ -31,6 +31,10 @@
 </head>
 <body>
 
+
+
+
+
 <%@ include file="auth.jsp"%>
 <%@ page import="java.text.NumberFormat" %>
 <%@ include file="jdbc.jsp" %>
@@ -83,9 +87,18 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	String userID = rs.getString("userID");
 	//String = rs.getString("");
 
-	out.println("<h2> Customer Information </h2>");
-	out.print("<table border=\"1\">");
-	out.println("<tr><td>Customer ID</td><td><input value=" +customerID+ "></td><tr>");
+
+
+
+	!-- out.println("<h2> Customer Information </h2>");
+	out.print("<table border=\"1\">"); -->
+	
+	<table>
+
+	<tr><td>Customer ID</td><td>firstName</td><tr>"
+	<tr><td>Customer ID</td><td><form><input type="text" name="custId" value=1><input type="get" name="btn" value="Update"></form></td><tr>
+	
+
 	out.println("<tr><td>First Name</td><td>"+ firstName +"</td><tr>");
 	out.println("<tr><td>Last Name</td><td>"+ lastName +"</td><tr>");
 	out.println("<tr><td>Email</td><td>"+ email +"</td><tr>");
@@ -99,6 +112,14 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 	out.println("</table>");
 
 
+
+
+
+	String val = request.getParameter("custId");
+
+	out.print(val);
+
+
 }
 
 catch (SQLException ex)
@@ -108,6 +129,7 @@ catch (SQLException ex)
 
 
 %>
+
 
 </body>
 </html>

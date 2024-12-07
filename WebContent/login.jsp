@@ -53,6 +53,7 @@
 	<li><a href = "listprod.jsp">Product List</a></li>
     <li><a href = "listorder.jsp">Orders</a></li>
     <li><a href = "showcart.jsp">Cart</a></li>
+	<li><a href = "update_customer_info.jsp">Update Account Info</a></li>
     <li class="right"><a href="logout.jsp">Log out</a></li>
 
 </ul>
