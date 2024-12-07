@@ -107,7 +107,7 @@ else
 		
 
 
-		out.print("<td align=\"center\">"+product.get(3)+"</td>");
+		out.print("<td align=\"center\"><form align = \"middle\", method=\"get\" action=\"updateItem.jsp\"><input type=\"text\" name=\"quant\" value = " +qty+ "><input type=\"submit\" name=\"btn\" value=\"Add\"></form></td>");
 
 
 	
@@ -117,6 +117,9 @@ else
 		out.print("<td align=\"right\">"+currFormat.format(pr)+"</td>");
 		out.print("<td align=\"right\">"+currFormat.format(pr*qty)+"</td>");
 		total = total +pr*qty;
+
+
+		String name = request.getParameter("quant");
 
 
 	}
@@ -129,6 +132,9 @@ else
 	out.println("</table>");
 
 	out.println("<h2><a href=\"checkout.jsp\">Check Out</a></h2>");
+
+
+	
 
 }
 %>

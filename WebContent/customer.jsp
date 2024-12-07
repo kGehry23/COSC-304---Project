@@ -2,7 +2,30 @@
 <html>
 <head>
 	<style>
-		body {background-color: powderblue}
+		body { background-color: #555}
+
+		table, td, th {
+  		border: 0.5px solid;
+		padding: 15px;
+		font-family:Georgia, 'Times New Roman', Times, serif;
+		background-color: #444;
+		color: lightslategray;
+	}
+
+	tr {
+		color:black;
+ 		font-size:18px;
+	}
+
+	table {
+		width: 100%;
+  		border-collapse: collapse;
+	}
+
+	h2 {
+
+		color: white
+	}
 	</style>
 <title>Customer Page</title>
 </head>
@@ -62,7 +85,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 	out.println("<h2> Customer Information </h2>");
 	out.print("<table border=\"1\">");
-	out.println("<tr><td>Customer ID</td><td>"+ customerID +"</td><tr>");
+	out.println("<tr><td>Customer ID</td><td><input value=" +customerID+ "></td><tr>");
 	out.println("<tr><td>First Name</td><td>"+ firstName +"</td><tr>");
 	out.println("<tr><td>Last Name</td><td>"+ lastName +"</td><tr>");
 	out.println("<tr><td>Email</td><td>"+ email +"</td><tr>");
