@@ -1,14 +1,5 @@
-<!-- ********************************************************
- --- COSC 304 - Project
- ---
- --- 
- --- This file allows for adding a product
- --- 
- ---
- --- Author: Kai Gehry
- ---
- ---
- --- ********************************************************-->
+
+<!-- The following file allows for adding a product to the product list -->
 
  <%@ page import="java.sql.*,java.net.URLEncoder" %>
  <%@ page import="java.text.NumberFormat" %>
@@ -110,21 +101,7 @@
  
  
  <%
- 
- 
-     String username = session.getAttribute("authenticatedUser") == null ?
-             null : session.getAttribute("authenticatedUser").toString();
- 
-     String userGreeting = "Guest";
-     String loginLink = "login.jsp";
-     String loginMsg = "Login";
- 
-     if (username != null) {
-         userGreeting = username;
-         loginLink = "logout.jsp";
-         loginMsg = "Logout";
-     }
- 
+
  
      String prod_name = request.getParameter("pname");
      String price = request.getParameter("price");
@@ -134,7 +111,7 @@
  
  
  
- if(prod_name != "")
+ if(prod_name != "" && prod_name != null)
  {
      try
      {	// Load driver class
@@ -169,6 +146,8 @@
  
          if(!rst.next())
          {
+
+            out.print(catId);
  
              out.print("<h2>"+"Thew new product has been added!"+"</h2>");
  

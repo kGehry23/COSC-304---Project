@@ -72,6 +72,7 @@
 			
 		<ul class="topnav">
 		  <li><a href = "add_product.jsp">Add Product</a></li>
+          <li><a href = "remove_product.jsp">Remove Product</a></li>
 		  <li><a href = "listprod.jsp">Product List</a></li>
 		  <li class="right"><a href="logout.jsp">Log out</a></li>
 		  

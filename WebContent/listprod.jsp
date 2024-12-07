@@ -79,6 +79,7 @@
 		  <li><a href = "showcart.jsp">Cart</a></li>
 		  <li class="right"><a href="logout.jsp">Log out</a></li>
 		  <li class="right"><a href = "login.jsp">Login</a></li>
+		  <li class="right"><a href = "admin.jsp">Administrator Page</a></li>
 		  <li class="right"><a href = "create_account.jsp">Create Account</a></li>
 		  
 
