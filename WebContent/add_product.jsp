@@ -50,7 +50,7 @@
  
  
      </style>
- <title>Create Account Screen</title>
+ <title>Add Product Screen</title>
  </head>
  <body>
  
@@ -146,8 +146,6 @@
  
          if(!rst.next())
          {
-
-            out.print(catId);
  
              out.print("<h2>"+"Thew new product has been added!"+"</h2>");
  

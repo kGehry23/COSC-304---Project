@@ -50,7 +50,7 @@
 
 
     </style>
-<title>Create Account Screen</title>
+<title>Remove Product Page</title>
 </head>
 <body>
 
@@ -67,7 +67,7 @@
 
 <h3>Remove Product</h3>
 
-<form name="MyForm" method=post action="add_product.jsp">
+<form name="MyForm" method=post action="remove_product.jsp">
 <table style="display:inline">
 <tr>
     <td><input align="right" type="text" placeholder="Product Name" name="pname" size=10 maxlength=10 style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;"></td>
@@ -110,10 +110,7 @@ if(prod_name != "" && prod_name != null)
 
 
     String sql1 = "SELECT * FROM product WHERE productName = ?";
-    String sql2 = "INSERT INTO product (productName, categoryId, productDesc, productPrice) VALUES (?, ?, ?, ?)";
-    String sql3 = "INSERT INTO productInventory(productId, warehouseId, quantity, price) VALUES (?, ?, ?, ?)";
-    String sql4 = "SELECT productId FROM product WHERE productName = ?";
-
+    String sql2 = "DELETE FROM product WHERE productName = ?";
 
 
     //attempt connection to DB
@@ -126,47 +123,21 @@ if(prod_name != "" && prod_name != null)
 
         ResultSet rst = pstmt.executeQuery();
 
-        if(!rst.next())
+        if(rst.next())
         {
 
-           out.print(catId);
-
-            out.print("<h2>"+"Thew new product has been added!"+"</h2>");
+            out.print("<h2>"+"The Product Has Been Removed!"+"</h2>");
 
             PreparedStatement pstmt2 = con.prepareStatement(sql2);
             pstmt2.setString(1, prod_name);
-            pstmt2.setInt(2, Integer.parseInt(catId));
-            pstmt2.setString(3, desc);
-            pstmt2.setInt(4, Integer.parseInt(price));
-           
+     
             pstmt2.executeUpdate();
-
-
-           PreparedStatement pstmt3 = con.prepareStatement(sql4);
-           pstmt3.setString(1, prod_name);
-
-           ResultSet rst2 = pstmt3.executeQuery();
-
-
-           rst2.next();
-           int id = rst2.getInt("productId");
-           out.print(id);
-
-
-           PreparedStatement pstmt4 = con.prepareStatement(sql3);
-           pstmt4.setInt(1, id);
-           pstmt4.setInt(2, 1);
-           pstmt4.setInt(3, 20);
-           pstmt4.setInt(4, 20);
-
-           pstmt4.executeUpdate();
-   
 
         }
 
         else
         {
-            out.print("<h2>"+"A Product With That Name Already Exists. Please Refer To The Product List Page For Further Details."+"</h2>");
+            out.print("<h2>"+"That Product Does Not Exist in the Database."+"</h2>");
         }
 
 

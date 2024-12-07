@@ -74,10 +74,14 @@
 		  <li><a href = "add_product.jsp">Add Product</a></li>
           <li><a href = "remove_product.jsp">Remove Product</a></li>
 		  <li><a href = "listprod.jsp">Product List</a></li>
-		  <li class="right"><a href="logout.jsp">Log out</a></li>
-		  
+          <li><a href = "customer.jsp">View All Users</a></li>
+          <li><a href = "ship_orders.jsp">Ship Orders</a></li>
+          <li class="right"><a href="logout.jsp">Log out</a></li>
+		  <li class="right"><a href="login.jsp">Log In</a></li>
 
 		</ul>
+
+        <jsp:include page="header.jsp" />
 
 		
 		</body>

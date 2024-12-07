@@ -72,8 +72,6 @@
 </head>
 <body>
     <ul class="topnav">
-        <li><a href="index.jsp">Home</a></li>
-        <li class="right"><a href="<%= loginLink %>"><%= loginMsg %></a></li>
         <li class="right"><span class="welcome-message">Welcome, <%= userGreeting %></span></li>
     </ul>
 </body>

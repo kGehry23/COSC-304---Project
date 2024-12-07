@@ -71,6 +71,8 @@
 	}
 
 		</style>
+
+		
 		</head>
 		<body>
 			
@@ -81,9 +83,12 @@
 		  <li class="right"><a href = "login.jsp">Login</a></li>
 		  <li class="right"><a href = "admin.jsp">Administrator Page</a></li>
 		  <li class="right"><a href = "create_account.jsp">Create Account</a></li>
-		  
+		  <li class="right"><a href = "index.jsp">Index</a></li>
+
 
 		</ul>
+
+		<jsp:include page="header.jsp" />
 
 		
 		</body>
@@ -96,16 +101,16 @@
 
 
 <form align = "middle", method="get" action="listprod.jsp">
+	<select name="Category" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;"><option value="All">All</option><option value="Beverages">Beverages</option><option value="Condiments">Condiments</option>
+		<option value="Dairy Products">Dairy Products</option><option value="Produce">Produce</option><option value="Meat/Poultry">Meat/Poultry</option><option value="Seafood">Seafood</option><option value="Confections">Confections</option><option value="Grains/Cereals">Grains/Cereals</option></select>
+		<input type="submit" value="Submit" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
 <input type="text" name="productName" size="50" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
 <input type="submit" value="Submit" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;"><input type="reset" value="Reset" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
 </form>
 
-<!-- Drop down menu for category filtering -->
-<form method="get" action="listprod.jsp">
-Category: <select name="Category"><option value="All">All</option><option value="Beverages">Beverages</option><option value="Condiments">Condiments</option>
-	<option value="Dairy Products">Dairy Products</option><option value="Produce">Produce</option><option value="Meat/Poultry">Meat/Poultry</option><option value="Seafood">Seafood</option><option value="Confections">Confections</option><option value="Grains/Cereals">Grains/Cereals</option></select>
-	<input type="submit" value="Submit">
-</form>
+
+
+
 
 
 

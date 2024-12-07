@@ -74,29 +74,37 @@
 	}
 
 		</style>
+
+		
 		</head>
 		<body>
 			
 		<ul class="topnav">
 		  <li><a href = "listorder.jsp">Orders</a></li>
 		  <li><a href = "showcart.jsp">Cart</a></li>
+		  <li><a href = "listprod.jsp">Product List</a></li>
 		  <li class="right"><a href="logout.jsp">Log out</a></li>
 		  <li class="right"><a href = "login.jsp">Login</a></li>
 		  <li class="right"><a href = "admin.jsp">Administrator Page</a></li>
 		  <li class="right"><a href = "create_account.jsp">Create Account</a></li>
-		  
+		  <li class="right"><a href = "index.jsp">Index</a></li>
+
 
 		</ul>
+
+		<jsp:include page="header.jsp" />
 
 		
 		</body>
 		</html>
 	
+	
+</style>
+<title>Chop & Co Grocery Order Processing</title>
+</head>
+<body>
 
-<a href = "listorder.jsp">Orders</a>
-<a href = "listprod.jsp">Product List</a>
-
-<h1>Your Order Summary</h1>
+<h1 align ="middle">Your Order Summary</h1>
 
 
 <% 
@@ -165,7 +173,7 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 
 	else if(productList.isEmpty())
 	{
-		out.print("<h2>"+"Your Cart is Empty!"+"</h2>");
+		out.print("<h2 align =\"middle\">"+"Your Cart is Empty!"+"</h2>");
 
 	}
 

@@ -118,7 +118,9 @@
 %>
 
 <br>
-<a href = "listprod.jsp">Continue Shopping</a>
+<form method="get" action="listprod.jsp">
+    <input type="submit" value="Continue Shopping" style="border-radius: 15px;padding: 10px;border: 2px solid #ccc;">
+    </form>
 
 </body>
     </html>
