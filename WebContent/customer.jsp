@@ -30,14 +30,13 @@
 <title>Customer Page</title>
 </head>
 <body>
-
-
-
-
+	
 
 <%@ include file="auth.jsp"%>
 <%@ page import="java.text.NumberFormat" %>
 <%@ include file="jdbc.jsp" %>
+
+<h2> Customer Information </h2>
 
 
 
@@ -58,7 +57,7 @@ String pw="304#sa#pw";
 
 //customerID, fistName, lastName, email, phoneNum, address, city,state, postalCode, country, userID
 // TODO: Print Customer information
-String sql = "SELECT * FROM customer WHERE userid = ?";
+String sql = "SELECT * FROM customer";
 
 
 
@@ -69,56 +68,43 @@ try ( Connection con = DriverManager.getConnection(url, uid, pw);
 {	
 	
 	PreparedStatement pstmt = con.prepareStatement(sql);
-	pstmt.setString(1,userName);
+
 	ResultSet rs = pstmt.executeQuery();
 
-	rs.next();
+	while(rs.next())
+	{
 
-	int customerID = rs.getInt("customerId");
-	String firstName = rs.getString("firstName");
-	String lastName = rs.getString("lastName");
-	String email = rs.getString("email");
-	String phoneNum = rs.getString("phoneNum");
-	String address = rs.getString("address");
-	String city = rs.getString("city");
-	String state = rs.getString("state");
-	String postalCode = rs.getString("postalCode");
-	String country = rs.getString("country");
-	String userID = rs.getString("userID");
-	//String = rs.getString("");
+		int customerID = rs.getInt("customerId");
+		String firstName = rs.getString("firstName");
+		String lastName = rs.getString("lastName");
+		String email = rs.getString("email");
+		String phoneNum = rs.getString("phoneNum");
+		String address = rs.getString("address");
+		String city = rs.getString("city");
+		String state = rs.getString("state");
+		String postalCode = rs.getString("postalCode");
+		String country = rs.getString("country");
+		String userID = rs.getString("userID");
+		//String = rs.getString("");
 
+		out.print("<table border=\"1\">");
+		out.println("<tr><td>Customer ID</td><td>" +customerID+ "</td><tr>");
+		out.println("<tr><td>First Name</td><td>"+ firstName +"</td><tr>");
+		out.println("<tr><td>Last Name</td><td>"+ lastName +"</td><tr>");
+		out.println("<tr><td>Email</td><td>"+ email +"</td><tr>");
+		out.println("<tr><td>Phone</td><td>"+ phoneNum +"</td><tr>");
+		out.println("<tr><td>Address</td><td>"+ address +"</td><tr>");
+		out.println("<tr><td>City</td><td>"+ city +"</td><tr>");
+		out.println("<tr><td>State</td><td>"+ state +"</td><tr>");
+		out.println("<tr><td>postalCode</td><td>"+ postalCode +"</td><tr>");
+		out.println("<tr><td>Country</td><td>"+ country +"</td><tr>");
+		out.println("<tr><td>UserId</td><td>"+ userID +"</td><tr>");
+		out.println("</table>");
 
+		out.print("<br>");
+		out.print("<br>");
 
-
-	!-- out.println("<h2> Customer Information </h2>");
-	out.print("<table border=\"1\">"); -->
-	
-	<table>
-
-	<tr><td>Customer ID</td><td>firstName</td><tr>"
-	<tr><td>Customer ID</td><td><form><input type="text" name="custId" value=1><input type="get" name="btn" value="Update"></form></td><tr>
-	
-
-	out.println("<tr><td>First Name</td><td>"+ firstName +"</td><tr>");
-	out.println("<tr><td>Last Name</td><td>"+ lastName +"</td><tr>");
-	out.println("<tr><td>Email</td><td>"+ email +"</td><tr>");
-	out.println("<tr><td>Phone</td><td>"+ phoneNum +"</td><tr>");
-	out.println("<tr><td>Address</td><td>"+ address +"</td><tr>");
-	out.println("<tr><td>City</td><td>"+ city +"</td><tr>");
-	out.println("<tr><td>State</td><td>"+ state +"</td><tr>");
-	out.println("<tr><td>postalCode</td><td>"+ postalCode +"</td><tr>");
-	out.println("<tr><td>Country</td><td>"+ country +"</td><tr>");
-	out.println("<tr><td>UserId</td><td>"+ userID +"</td><tr>");
-	out.println("</table>");
-
-
-
-
-
-	String val = request.getParameter("custId");
-
-	out.print(val);
-
+	}
 
 }
 
